@@ -1,0 +1,48 @@
+
+import pandas as pd
+import numpy as np
+
+# Step 1: Create the dataset
+data = {
+    "Distance_km": [1, 2, 3, 4, 5, 6],
+    "Delivery_Time_min": [12, 15, 21, 23, 29, 30]
+}
+
+df = pd.DataFrame(data)
+print("Delivery Dataset:")
+print(df)
+
+# Step 2: Select input and output
+x = df["Distance_km"]
+y = df["Delivery_Time_min"]
+
+# Step 3: Calculate slope and intercept
+slope = sum((x - x.mean()) * (y - y.mean())) / sum((x - x.mean()) ** 2)
+
+intercept = y.mean() - slope * x.mean()
+
+# Step 4: Predict delivery time
+predicted = intercept + slope * x
+
+# Step 5: Calculate prediction error
+error = y - predicted
+
+# Step 6: Calculate standard error
+standard_error = (sum(error ** 2) / (len(df) - 2)) ** 0.5
+
+# Step 7: Display results
+print("\nSlope:", round(slope, 2))
+print("Intercept:", round(intercept, 2))
+
+print("\nPredicted Delivery Times:")
+print(predicted.round(2))
+
+print("\nTotal Observations:", len(df))
+print("Standard Error:", round(standard_error, 2))
+
+# Step 8: Predict for a new distance
+new_distance = 7
+new_prediction = intercept + slope * new_distance
+
+print("\nPredicted time for 7 km:",
+      round(new_prediction, 2), "minutes")
